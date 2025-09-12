@@ -1,8 +1,45 @@
+import questionary
+import time
 import random
-from bubble_sort import bubble_sort
+from typing import Callable
 
-random_list = [random.randint(1, 1000) for _ in range(1000)]
+from bubble_sort import bubble_sort
+# from insertion_sort import insertion_sort
+# from merge_sort import merge_sort
+# from quick_sort import quick_sort
+# from selection_sort import selection_sort
+# from heap_sort import heap_sort
+
+LIST_SIZE = 10000
+
+RANDOM_LIST = [random.randint(1, 1000) for _ in range(LIST_SIZE)]
+
+SORTING_ALGORITHMS = [
+    "Bubble sort",
+    "Insertion sort", 
+    "Merge sort",
+    "Quick sort",
+    "Selection sort",
+    "Heap sort",
+]
+
+def main():
+    # prompt the user to select a sorting algorithm interactively
+    choice = questionary.select(
+        "Which sorting algorithm do you want to use?",
+        choices=SORTING_ALGORITHMS
+    ).ask()
+
+    # handle the user's choice
+    match choice:
+        case "Bubble sort": measure_algorithm_performance(bubble_sort)
+        # case "Insertion sort": measure_algorithm_performance(insertion_sort)
+        # case "Merge sort": measure_algorithm_performance(merge_sort)
+        # case "Quick sort": measure_algorithm_performance(quick_sort)
+        # case "Selection sort": measure_algorithm_performance(selection_sort)
+        # case "Heap sort": measure_algorithm_performance(heap_sort)
+        case _:
+            print("No valid selection made.")
 
 if __name__ == "__main__":
-    sorted_list = bubble_sort(random_list)
-    print(sorted_list)
+    main()
