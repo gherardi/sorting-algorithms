@@ -23,6 +23,18 @@ SORTING_ALGORITHMS = [
     "Heap sort",
 ]
 
+def measure_algorithm_performance(algorithm_func: Callable):
+    # Measures and reports the execution time of a sorting algorithm.
+    start_time = time.perf_counter()
+    algorithm_func(RANDOM_LIST)
+    end_time = time.perf_counter()
+
+    execution_time = end_time - start_time
+    algorithm_name = algorithm_func.__name__
+
+    print(f"{algorithm_name} took {execution_time:.6f} seconds to sort {LIST_SIZE} elements.")
+
+
 def main():
     # prompt the user to select a sorting algorithm interactively
     choice = questionary.select(
