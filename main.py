@@ -4,7 +4,7 @@ import random
 from typing import Callable
 
 from bubble_sort import bubble_sort
-# from insertion_sort import insertion_sort
+from insertion_sort import insertion_sort
 # from merge_sort import merge_sort
 # from quick_sort import quick_sort
 # from selection_sort import selection_sort
@@ -45,7 +45,7 @@ def main():
     # handle the user's choice
     match choice:
         case "Bubble sort": measure_algorithm_performance(bubble_sort)
-        # case "Insertion sort": measure_algorithm_performance(insertion_sort)
+        case "Insertion sort": measure_algorithm_performance(insertion_sort)
         # case "Merge sort": measure_algorithm_performance(merge_sort)
         # case "Quick sort": measure_algorithm_performance(quick_sort)
         # case "Selection sort": measure_algorithm_performance(selection_sort)
