@@ -11,13 +11,13 @@ def insertion_sort(arr: List[int]) -> List[int]:
     """
     length = len(arr)
 
-    for i in range(1, length):
-        key = arr[i]
-        j = i - 1
-        # Move elements of arr[0..i-1], that are greater than key,
+    for index in range(1, length):
+        current_value = arr[index]
+        position = index - 1
+        # Move elements of arr[0..index-1], that are greater than current_value,
         # to one position ahead of their current position
-        while j >= 0 and arr[j] > key:
-            arr[j + 1] = arr[j]
-            j -= 1
-        arr[j + 1] = key
+        while position >= 0 and arr[position] > current_value:
+            arr[position + 1] = arr[position]
+            position -= 1
+        arr[position + 1] = current_value
     return arr
