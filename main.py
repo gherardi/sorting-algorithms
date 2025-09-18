@@ -8,9 +8,9 @@ from insertion_sort import insertion_sort
 from merge_sort import merge_sort
 from quick_sort import quick_sort
 from selection_sort import selection_sort
-# from heap_sort import heap_sort
+from heap_sort import heap_sort
 
-LIST_SIZE = 1000
+LIST_SIZE = 10000
 
 RANDOM_LIST = [random.randint(1, 1000) for _ in range(LIST_SIZE)]
 
@@ -25,36 +25,40 @@ SORTING_ALGORITHMS = [
 
 def measure_algorithm_performance(algorithm_func: Callable):
     # Measures and reports the execution time of a sorting algorithm.
+    # Create a copy of the list to avoid modifying the original
+    test_list = RANDOM_LIST.copy()
+    
     start_time = time.perf_counter()
-    algorithm_func(RANDOM_LIST)
+    algorithm_func(test_list)
     end_time = time.perf_counter()
 
     execution_time = end_time - start_time
     algorithm_name = algorithm_func.__name__
 
-    print(f"{algorithm_name} took {execution_time:.6f} seconds to sort {LIST_SIZE} elements.", end="\n")
+    print(f"{algorithm_name} took {execution_time:.6f} seconds to sort {LIST_SIZE} elements.", end="\n\n")
 
 def main():
-    # try:
-    # prompt the user to select a sorting algorithm interactively
-    choice = questionary.select(
-        "Which sorting algorithm do you want to use?",
-        choices=SORTING_ALGORITHMS
-    ).ask()
+    try:
+        while True:
+            # prompt the user to select a sorting algorithm interactively
+            choice = questionary.select(
+                "Which sorting algorithm do you want to use?",
+                choices=SORTING_ALGORITHMS
+            ).ask()
 
-    # handle the user's choice
-    match choice:
-        case "Bubble sort": measure_algorithm_performance(bubble_sort)
-        case "Insertion sort": measure_algorithm_performance(insertion_sort)
-        case "Merge sort": measure_algorithm_performance(merge_sort)
-        case "Quick sort": measure_algorithm_performance(quick_sort)
-        case "Selection sort": measure_algorithm_performance(selection_sort)
-        # case "Heap sort": measure_algorithm_performance(heap_sort)
-        case _:
-            print(f"No valid selection made. Exiting...")
-            exit(0)
-    # except KeyboardInterrupt:
-    #     print("\nOperation cancelled by user.")
+            # handle the user's choice
+            match choice:
+                case "Bubble sort": measure_algorithm_performance(bubble_sort)
+                case "Insertion sort": measure_algorithm_performance(insertion_sort)
+                case "Merge sort": measure_algorithm_performance(merge_sort)
+                case "Quick sort": measure_algorithm_performance(quick_sort)
+                case "Selection sort": measure_algorithm_performance(selection_sort)
+                case "Heap sort": measure_algorithm_performance(heap_sort)
+                case _:
+                    print(f"No valid selection made. Exiting...")
+                    exit(0)
+    except KeyboardInterrupt:
+        print("\nOperation cancelled by user.")
 
 if __name__ == "__main__":
     main()
