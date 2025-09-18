@@ -36,7 +36,7 @@ def _quick_sort_helper(arr: List[int], low_index: int, high_index: int) -> None:
 
 def _partition(arr: List[int], low_index: int, high_index: int) -> int:
     """
-    Partitions the array around a pivot element.
+    Partitions the array around a pivot element using median-of-three pivot selection.
     Args:
         arr (List[int]): The list to partition.
         low_index (int): Starting index of the subarray.
@@ -44,18 +44,43 @@ def _partition(arr: List[int], low_index: int, high_index: int) -> int:
     Returns:
         int: The final position of the pivot element.
     """
-    # Choose the rightmost element as pivot
+    # Use median-of-three pivot selection to avoid worst case
+    _median_of_three(arr, low_index, high_index)
+    
+    # Choose the rightmost element as pivot (now median of three)
     pivot = arr[high_index]
     
     # Index of smaller element, indicates right position of pivot
     smaller_element_index = low_index - 1
     
     for current_index in range(low_index, high_index):
-        # If current element is smaller than or equal to pivot
-        if arr[current_index] <= pivot:
+        # If current element is smaller than pivot (not equal to avoid infinite recursion)
+        if arr[current_index] < pivot:
             smaller_element_index += 1
             arr[smaller_element_index], arr[current_index] = arr[current_index], arr[smaller_element_index]
     
     # Place pivot in correct position
     arr[smaller_element_index + 1], arr[high_index] = arr[high_index], arr[smaller_element_index + 1]
     return smaller_element_index + 1
+
+
+def _median_of_three(arr: List[int], low_index: int, high_index: int) -> None:
+    """
+    Selects the median of three elements (first, middle, last) as pivot.
+    Args:
+        arr (List[int]): The list to process.
+        low_index (int): Starting index of the subarray.
+        high_index (int): Ending index of the subarray.
+    """
+    if high_index - low_index < 2:
+        return
+        
+    mid_index = (low_index + high_index) // 2
+    
+    # Sort low, mid, high so that median ends up at high_index
+    if arr[mid_index] < arr[low_index]:
+        arr[low_index], arr[mid_index] = arr[mid_index], arr[low_index]
+    if arr[high_index] < arr[low_index]:
+        arr[low_index], arr[high_index] = arr[high_index], arr[low_index]
+    if arr[high_index] < arr[mid_index]:
+        arr[mid_index], arr[high_index] = arr[high_index], arr[mid_index]
